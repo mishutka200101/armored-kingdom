@@ -31,7 +31,7 @@ def main():
         }
 
         response = requests.post('https://api.armoredkingdom.com/linkdrop/api/emailNftUrl/', headers=headers,
-                                 json=json_data, proxies=proxies)
+                                 json=json_data)
 
         # if response.status_code == 200:
         #     print('Email sended')
