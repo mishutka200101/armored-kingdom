@@ -53,13 +53,16 @@ def main():
             for i in dict[::-1]:
                 if str(i).__contains__('https://u12149045.ct.sendgrid.net/ls/click?'):
                     url = str(i).split('"')[1]
-                    # print(url)
-                    with open('mint_urls.txt', 'a') as file:
-                        file.write(f'{url}\n')
-                    print('URL to claim was writen to "mint_urls.txt"')
+                    response = requests.get(url)
+                    if response.url == 'https://armoredkingdom.com/':
+                        raise Exception
+                    else:
+                        with open('mint_urls.txt', 'a') as file:
+                            file.write(f'{url}\n')
+                        print('URL to claim was writen to "mint_urls.txt"')
                     break
         except Exception:
-            print('Email not received... Retrying...')
+            print('Email not received or url not to claim... Retrying...')
 
 
 if __name__ == "__main__":
