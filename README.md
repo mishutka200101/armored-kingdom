@@ -2,7 +2,7 @@ Utility: Получение ссылок на клейм Near
 
 Для работы скрипта необходим Python, скачиваем с оф. сайта - https://www.python.org/downloads/
 
-Скачиваем репозиторий командой git clone https://github.com/mishutka200101/armored-kingdom
+Скачиваем репозиторий командой: git clone https://github.com/mishutka200101/armored-kingdom
 
 Скачиваем необходимые библиотеки: pip install -r requirements.txt
 
@@ -10,6 +10,6 @@ Utility: Получение ссылок на клейм Near
 
 Добавляем свой api key в файл anticaptcha.py
 
-Запускаем скрипт python main.py
+Запускаем скрипт: python main.py
 
 Ссылки для клейма будут сохраняться в файл mint_urls.txt
