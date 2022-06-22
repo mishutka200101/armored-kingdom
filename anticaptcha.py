@@ -1,7 +1,4 @@
-import re
 import requests
-from os import environ
-
 from python_anticaptcha import AnticaptchaClient, NoCaptchaTaskProxylessTask
 
 api_key = ''
@@ -15,7 +12,6 @@ def get_form_html():
 
 
 def get_token(form_html):
-    # site_key = re.search(site_key_pattern, form_html).group(1)
     site_key = '6Lf7lXsgAAAAAK34WnPfX30hw78U4IUiR6RLXZ-G'
     task = NoCaptchaTaskProxylessTask(website_url=url, website_key=site_key)
     job = client.createTaskSmee(task, timeout=10 * 60)
@@ -29,5 +25,4 @@ def form_submit(token):
 def process():
     html = get_form_html()
     token = get_token(html)
-    # form_submit(token)
     return token
