@@ -1,8 +1,18 @@
 from anticaptcha import *
+import time
+
+
+def generate_email():
+    email = requests.get('https://www.1secmail.com/api/v1/?action=genRandomMailbox').text.replace('[', '').replace(']', '').replace('"', '')
+    return email
 
 
 def main():
+    print("Work started, prepare to get money $$$")
     while True:
+        email = requests.get('https://www.1secmail.com/api/v1/?action=genRandomMailbox').text.replace('[', '').replace(
+            ']', '').replace('"', '')
+        login, domain = email.split('@')
         headers = {
             'Accept': 'application/json, text/plain, */*',
             'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -26,18 +36,30 @@ def main():
 
         json_data = {
             'type': 'Unlimited',
-            'email': 'minima_9006@rambler.ru',
-            'recaptchaToken': f'{process()}',
+            'email': email,
+            'recaptchaToken': process(),
         }
 
         response = requests.post('https://api.armoredkingdom.com/linkdrop/api/emailNftUrl/', headers=headers,
                                  json=json_data)
 
-        # if response.status_code == 200:
-        #     print('Email sended')
-        # else:
-        #     print("ERROR, email not sended")
-        print(response, response.text)
+        time.sleep(20)
+        try:
+            mailbox = requests.get(f'https://www.1secmail.com/api/v1/?action=getMessages&login={login}&domain={domain}')
+            mail_id = mailbox.json()[0]['id']
+            read_mail = requests.get(f'https://www.1secmail.com/api/v1/?action=readMessage&login={login}&domain={domain}'
+                                     f'&id={mail_id}')
+            dict = read_mail.json()['body'].split(' ')
+            for i in dict[::-1]:
+                if str(i).__contains__('https://u12149045.ct.sendgrid.net/ls/click?'):
+                    url = str(i).split('"')[1]
+                    # print(url)
+                    with open('mint_urls.txt', 'a') as file:
+                        file.write(f'{url}\n')
+                    print('URL to claim was writen to "mint_urls.txt"')
+                    break
+        except Exception:
+            print('Email not received... Retrying...')
 
 
 if __name__ == "__main__":
